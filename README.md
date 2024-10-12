@@ -104,3 +104,9 @@ For SMS notication I can also use scheduler command like and changed the logic i
 <p align="center">
   <img src="screenshots/Vaccine Registration Status not found.png" alt="Registration Form" width="600">
 </p>
+
+-   **Vaccination Registration mail check result**:
+
+<p align="center">
+  <img src="screenshots/Mailtrap - Email Delivery Platform - mailtrap.io.png" alt="Registration Form" width="900">
+</p>
