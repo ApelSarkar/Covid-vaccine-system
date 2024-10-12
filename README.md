@@ -9,7 +9,7 @@
 
 ## Covid Vaccine System
 
--   [Clone the repository from here] (https://github.com/ApelSarkar/Transaction-Application/tree/master).
+-   [Clone the repository from here] (https://github.com/ApelSarkar/Covid-vaccine-system).
 
 ## Install Dependencies
 
@@ -23,10 +23,6 @@
 ## Run the migrations:
 
 -   `php artisan migrate`
-
-## Pre-populate the Database run db seed:
-
--   `php artisan db:seed`
 
 ## Pre-populate the Database run db seed:
 
