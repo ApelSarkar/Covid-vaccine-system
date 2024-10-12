@@ -40,12 +40,12 @@ class ScheduleVaccination extends Command
                     ->take($center->daily_limit)
                     ->get();
 
-                $instant_date = Carbon::now();
-                // $nextAvailableDate = $this->getNextAvailableDate($today);
+                // $instant_date = Carbon::now(); use for check scheduler
+                $nextAvailableDate = $this->getNextAvailableDate($today);
 
                 foreach ($covid_registration as $registration) {
                     $registration->update([
-                        'scheduled_date' => $instant_date->format('Y-m-d H:i:s'),
+                        'scheduled_date' => $nextAvailableDate->format('Y-m-d H:i:s'),
                         'status' => 'Scheduled',
                     ]);
 
@@ -57,7 +57,6 @@ class ScheduleVaccination extends Command
 
     private function getNextAvailableDate($date)
     {
-        // Ensure the date is within weekdays (Sunday to Thursday)
         do {
             $date->addDay();
         } while ($date->isFriday() || $date->isSaturday());

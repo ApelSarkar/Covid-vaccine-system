@@ -44,17 +44,17 @@
 
 If I have more time i opitimize the project in several ways like:
 
-Database indexing: I ensure that the key columns, like nid (National ID), email, and vaccine_center_id, are indexed. This will help speed up database write and read operations.
+**Database indexing**: I ensure that the key columns, like nid (National ID), email, and vaccine_center_id, are indexed. This will help speed up database write and read operations.
 
-Batch Insertions: If handling bulk registrations, use batch inserts to reduce the number of database transactions:
+**Batch Insertions**: If handling bulk registrations, use batch inserts to reduce the number of database transactions:
 
-Queue for Time-Consuming Tasks: For processes like sending emails or other heavy operations during registration, I used Laravel queu.
+**Queue for Time-Consuming Tasks**: For processes like sending emails or other heavy operations during registration, I used Laravel queu.
 
-Full-Text Search: I will implement full-text indexing for faster searches, especially for columns like name, email, or any other text-based fields:
+**Full-Text Search**: I will implement full-text indexing for faster searches, especially for columns like name, email, or any other text-based fields:
 
-Use Eager Loading: If my search queries often involve relationships (e.g., vaccine_center),I use eager loading to minimize the number of database queries.
+**Eager Loading**: If my search queries often involve relationships (e.g., vaccine_center),I use eager loading to minimize the number of database queries.
 
-Cache Search Results: For commonly searched terms or filters, I can use Laravel's cache to improve search result.
+**Cache Search Results**: For commonly searched terms or filters, I can use Laravel's cache to improve search result.
 
 ## Integrate an SMS Service:
 
@@ -72,7 +72,7 @@ For SMS notication I can also use scheduler command like and changed the logic i
 -   **Registration Form**:
 
 <p align="center">
-  <img src="screenshots/registration.png" alt="Registration Form" width="600">
+  <img src="screenshots/Registration.png" alt="Registration Form" width="600">
 </p>
 
 -   **Vaccination Status Successfull**:
