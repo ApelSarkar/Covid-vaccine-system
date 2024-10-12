@@ -7,60 +7,100 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Covid Vaccine System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   [Clone the repository from here] (https://github.com/ApelSarkar/Transaction-Application/tree/master).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Install Dependencies
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   `composer install`
 
-## Learning Laravel
+## Set up the environment file:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   `cp .env.example .env`
+-   `php artisan key:generate`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Run the migrations:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   `php artisan migrate`
 
-## Laravel Sponsors
+## Pre-populate the Database run db seed:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   `php artisan db:seed`
 
-### Premium Partners
+## Pre-populate the Database run db seed:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+-   `php artisan db:seed`
 
-## Contributing
+## Run scheduler command to execute vaccination schedule:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   `php artisan vaccination:schedule`
 
-## Code of Conduct
+## Start the development server:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   `php artisan serve`
 
-## Security Vulnerabilities
+## How I would optimise these:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If I have more time i opitimize the project in several ways like:
 
-## License
+Database indexing: I ensure that the key columns, like nid (National ID), email, and vaccine_center_id, are indexed. This will help speed up database write and read operations.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Batch Insertions: If handling bulk registrations, use batch inserts to reduce the number of database transactions:
+
+Queue for Time-Consuming Tasks: For processes like sending emails or other heavy operations during registration, I used Laravel queu.
+
+Full-Text Search: I will implement full-text indexing for faster searches, especially for columns like name, email, or any other text-based fields:
+
+Use Eager Loading: If my search queries often involve relationships (e.g., vaccine_center),I use eager loading to minimize the number of database queries.
+
+Cache Search Results: For commonly searched terms or filters, I can use Laravel's cache to improve search result.
+
+## Integrate an SMS Service:
+
+I will Twilio or any local SMS gateway provider.
+I had update the current email notification logic to also sending SMS.
+
+As I used Scheduler, when I run a command with a specific time and date, the mail is sent to the user.
+
+For SMS notication I can also use scheduler command like and changed the logic in ScheduleVaccination.php file
+
+-   `php artisan send:notifications`
+
+### Screenshot section:I've added screenshots below:
+
+-   **Registration Form**:
+
+<p align="center">
+  <img src="screenshots/registration.png" alt="Registration Form" width="600">
+</p>
+
+-   **Vaccination Status Successfull**:
+
+<p align="center">
+  <img src="screenshots/Vaccine Registration Status check.png" alt="Registration Form" width="600">
+</p>
+
+-   **Vaccination Status Form**:
+
+<p align="center">
+  <img src="screenshots/Search Vaccination Status .png" alt="Registration Form" width="600">
+</p>
+
+-   **Vaccination Status Search result**:
+
+<p align="center">
+  <img src="screenshots/Vaccine Registration Status.png" alt="Registration Form" width="600">
+</p>
+
+-   **Vaccination Center limit status check result**:
+
+<p align="center">
+  <img src="screenshots/FCOVID limit Vaccine Registration.png" alt="Registration Form" width="600">
+</p>
+
+-   **Vaccination Registration not found status check result**:
+
+<p align="center">
+  <img src="screenshots/Vaccine Registration Status not found.png" alt="Registration Form" width="600">
+</p>
