@@ -48,8 +48,15 @@ class ScheduleVaccination extends Command
                         'scheduled_date' => $nextAvailableDate->format('Y-m-d H:i:s'),
                         'status' => 'Scheduled',
                     ]);
+                    
+                    $emailSendTime = Carbon::parse($registration->scheduled_date)
+                        ->subDay()
+                        ->setTime(21, 0);
 
-                    Mail::to($registration->email)->send(new VaccinationScheduledMail($registration));
+                    if ($emailSendTime->greaterThanOrEqualTo(Carbon::now())) {
+                        Mail::to($registration->email)
+                            ->later($emailSendTime, new VaccinationScheduledMail($registration));
+                    }
                 }
             }
         });
@@ -61,6 +68,6 @@ class ScheduleVaccination extends Command
             $date->addDay();
         } while ($date->isFriday() || $date->isSaturday());
 
-        return $date->format('Y-m-d');
+        return $date;
     }
 }

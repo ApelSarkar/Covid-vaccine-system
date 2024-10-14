@@ -17,14 +17,14 @@ class VaccineSearchController extends Controller
         $request->validate([
             'nid' => 'required',
         ]);
-        
+
         $nid = $request->input('nid');
         $registration = CovidRegistration::where('nid', $nid)->first();
-        
-        if ($registration->status == "Not registered") {
+
+        if (!$registration) {
             return view('status', [
                 'status' => 'Not registered',
-                'linkToRegister' => route('register'), 
+                'linkToRegister' => route('register'),
             ]);
         }
 
