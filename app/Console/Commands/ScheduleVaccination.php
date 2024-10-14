@@ -32,30 +32,41 @@ class ScheduleVaccination extends Command
     {
         $today = Carbon::now();
 
+        $covid_registration = CovidRegistration::with('vaccineCenter')
+            ->where('status', 'Not scheduled')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
         VaccineCenter::chunk(100, function ($centers) use ($today) {
             foreach ($centers as $center) {
+
                 $covid_registration = CovidRegistration::with('vaccineCenter')
-                    ->where('vaccine_center_id', $center->id)
                     ->where('status', 'Not scheduled')
-                    ->take($center->daily_limit)
+                    ->orderBy('created_at', 'asc')
                     ->get();
 
-                // $instant_date = Carbon::now(); use for check scheduler
+                // use for check scheduler
+                // $instant_date = Carbon::now();
                 $nextAvailableDate = $this->getNextAvailableDate($today);
+                $dailyCount = 0;
 
                 foreach ($covid_registration as $registration) {
-                    $registration->update([
-                        'scheduled_date' => $nextAvailableDate->format('Y-m-d H:i:s'),
-                        'status' => 'Scheduled',
-                    ]);
-                    
-                    $emailSendTime = Carbon::parse($registration->scheduled_date)
-                        ->subDay()
-                        ->setTime(21, 0);
 
-                    if ($emailSendTime->greaterThanOrEqualTo(Carbon::now())) {
+                    if ($dailyCount < $center->daily_limit) {
+                        $registration->update([
+                            'vaccine_center_id' => $center->id,
+                            'scheduled_date' => $nextAvailableDate->format('Y-m-d H:i:s'),
+                            'status' => 'Scheduled',
+                        ]);
+
                         Mail::to($registration->email)
-                            ->later($emailSendTime, new VaccinationScheduledMail($registration));
+                            ->send(new VaccinationScheduledMail($registration));
+
+                        $dailyCount++;
+
+                    } else {
+                        $nextAvailableDate = $this->getNextAvailableDate($nextAvailableDate);
+                        $dailyCount = 0;
                     }
                 }
             }
